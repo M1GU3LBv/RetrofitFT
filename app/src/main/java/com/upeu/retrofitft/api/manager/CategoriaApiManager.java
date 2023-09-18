@@ -7,6 +7,7 @@ import com.upeu.retrofitft.model.Categoria;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 import java.util.List;
 
 public class CategoriaApiManager {
@@ -24,11 +25,9 @@ public class CategoriaApiManager {
                 if (response.isSuccessful()) {
                     List<Categoria> categorias = response.body();
                     callback.onResponse(call, Response.success(categorias));
-                    Log.d("TAG", "onResponse: ");
 
                 } else {
                     callback.onFailure(call, new Throwable("Error en la respuesta de la API"));
-                    Log.d("error", "onResponse: asddddddddddddddd");
                 }
             }
 
@@ -38,4 +37,38 @@ public class CategoriaApiManager {
             }
         });
     }
+
+    public void obtenerCategoriaId(final Callback<Categoria> callback, int id) {
+        Call<Categoria> call = categoriaApiService.getOneData(id);
+        call.enqueue(new Callback<Categoria>() {
+            @Override
+            public void onResponse(Call<Categoria> call, Response<Categoria> response) {
+                if (response.isSuccessful()) {
+                    Categoria categoria = response.body();
+                    callback.onResponse(call, Response.success(categoria));
+
+                } else {
+                    callback.onFailure(call, new Throwable("Error en la respuesta de la API"));
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<Categoria> call, Throwable t) {
+                callback.onFailure(call, t);
+            }
+
+        });
+
+
+    }
 }
+
+
+
+
+
+
+
+
