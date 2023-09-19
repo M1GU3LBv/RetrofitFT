@@ -1,7 +1,6 @@
 package com.upeu.retrofitft.api.service;
 
 import com.upeu.retrofitft.model.Categoria;
-import com.upeu.retrofitft.model.CategoriaList;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -16,9 +15,12 @@ Call <List<Categoria>> getAlldata();
 Call <Categoria> getOneData(@Path("id") int id);
 
 @POST("/categoria")
-Call <Categoria> postData(@Query("nombre") String nombre, @Query("descripcion") String descripcion);
+Call <Categoria> postData(@Body Categoria categoria);
 
 @DELETE("/categoria/{id}")
-Call <Categoria> deleteData(@Path("id") int id);
+Call<Object> eliminarCategoria(@Path("id") int id);
+    @DELETE("/categoria/{id}")
+    String deleteItem(@Path("id") int itemId);
+
 
 }

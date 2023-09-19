@@ -1,6 +1,5 @@
 package com.upeu.retrofitft.api.manager;
 
-import android.util.Log;
 import com.upeu.retrofitft.api.config.RetrofitClient;
 import com.upeu.retrofitft.api.service.CategoriaApiService;
 import com.upeu.retrofitft.model.Categoria;
@@ -63,6 +62,50 @@ public class CategoriaApiManager {
 
 
     }
+
+
+
+
+
+    public void crearCategoria(Categoria categoria, final Callback<Categoria> callback) {
+        Call<Categoria> call = categoriaApiService.postData(categoria);
+        call.enqueue(new Callback<Categoria>() {
+            @Override
+            public void onResponse(Call<Categoria> call, Response<Categoria> response) {
+                if (response.isSuccessful()) {
+                    Categoria nuevaCategoria = response.body();
+                    callback.onResponse(call, Response.success(nuevaCategoria));
+                } else {
+                    callback.onFailure(call, new Throwable("Error en la respuesta de la API"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Categoria> call, Throwable t) {
+                callback.onFailure(call, t);
+            }
+        });
+    }
+    public void eliminarCategoria(int id, Callback<Object> callback) {
+        Call<Object> call = categoriaApiService.eliminarCategoria(id);
+        call.enqueue(new Callback<Object>() {
+
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+    public void deletecategoria(int id) {
+        String response= categoriaApiService.deleteItem(id);
+    }
+
+
 }
 
 
